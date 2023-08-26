@@ -1,5 +1,6 @@
 import "./App.css";
 import { Link } from "react-router-dom";
+import Image from "./components/Image";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
             </li>
           </ul>
         </nav>
+        <Image />
       </div>
     </>
   );
