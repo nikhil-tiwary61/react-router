@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 export default function Image() {
   const [imageUrl, setImageUrl] = useState(null);
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetch("https://jsonplaceholder.typicode.com/photos", { mode: "cors" })
@@ -13,18 +14,16 @@ export default function Image() {
         return response.json();
       })
       .then((response) => setImageUrl(response[0].url))
-      .catch((error) => setError(error));
+      .catch((error) => setError(error))
+      .finally(() => setLoading(false));
   }, []);
 
-  if (error) {
-    return <p>An error was encountered.</p>;
-  }
+  if (error) return <p>An error was encountered.</p>;
+  if (loading) return <p>Loading ...</p>;
   return (
-    imageUrl && (
-      <>
-        <h1>This is the image</h1>
-        <img src={imageUrl} alt="placeholder image" />
-      </>
-    )
+    <>
+      <h1>This is the image</h1>
+      <img src={imageUrl} alt="placeholder image" />
+    </>
   );
 }
