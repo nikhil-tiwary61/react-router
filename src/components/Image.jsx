@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-export default function Image() {
+function useImageURL() {
   const [imageUrl, setImageUrl] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -17,7 +17,11 @@ export default function Image() {
       .catch((error) => setError(error))
       .finally(() => setLoading(false));
   }, []);
+  return { imageUrl, error, loading };
+}
 
+export default function Image() {
+  const { imageUrl, error, loading } = useImageURL();
   if (error) return <p>An error was encountered.</p>;
   if (loading) return <p>Loading ...</p>;
   return (
